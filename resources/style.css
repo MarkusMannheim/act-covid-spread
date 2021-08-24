@@ -1,0 +1,375 @@
+/* b: #009CBF o: #F75F00 g: #00A388 --tint-1: #333; --tint-2: #666; --tint-3: #999; --tint-4: #ccc; --tint-5: #e6e6e6; --tint-6: #f2f2f2; */
+@font-face {
+ font-family: ABCSansNovaRegular;
+ src: url(../fonts/ABCSansNova-Regular.otf);
+}
+@font-face {
+ font-family: ABCSansNovaBlack;
+ src: url(../fonts/ABCSansNova-Black.otf);
+}
+@font-face {
+ font-family: ABCSansNovaLight;
+ src: url(../fonts/ABCSansNova-Light.otf);
+}
+:root {
+  font-size: 1em;
+  font-family: ABCSansNovaRegular, Helvetica, sans-serif;
+  color: #333;
+  box-sizing: border-box;
+}
+body {
+  margin-bottom: .5rem;
+  overflow: hidden;
+}
+#container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: .5rem;
+  padding: .5rem;
+  display: flex;
+  flex-flow: column;
+  background: #f2f2f2;
+  border: solid 1pt #999;
+}
+h1, p {
+  margin: 0;
+}
+#top {
+  display: flex;
+  justify-content: space-between;
+}
+#topContainer {
+  width: 100%;
+  margin-right: 1rem;
+}
+#icon {
+  opacity: 0;
+  width: 167px;
+}
+#map {
+  fill: #999;
+}
+#header {
+  margin-bottom: 1rem;
+}
+#header h1 {
+  font-family: ABCSansNovaBlack, "Arial Black", Gadget, sans-serif;
+  font-size: 1.3rem;
+}
+#header p {
+  font-family: ABCSansNovaLight, Helvetica, sans-serif;
+  margin-top: .25rem;
+  font-size: .9rem;
+}
+#counts {
+  display: flex;
+  justify-content: flex-start;
+  opacity: 0;
+}
+.count {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+}
+.count div:last-child {
+  text-align: center;
+  font-size: .9rem;
+
+}
+.box {
+  min-width: 3.5rem;
+  height: 3.5rem;
+  font-family: ABCSansNovaBlack, "Arial Black", Gadget, sans-serif;
+  line-height: 3.5rem;
+  text-align: center;
+  font-size: 1.75rem;
+  color: white;
+  border: solid 1px #666;
+  margin-bottom: .25rem;
+}
+#newCases .box {
+  background: #F75F00;
+}
+#activeCases .box {
+  background: #248BC9;
+}
+#daysSince .box {
+  background: #FFB300;
+}
+#twoDoses .box {
+  background: #00A388;
+  font-size: 1.5rem;
+}
+#oneDose .box {
+  background: #009CBF;
+  font-size: 1.5rem;
+}
+#chart {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+.area.one {
+  fill: #009CBF;
+}
+.area.two {
+  fill: #00A388;
+}
+.area {
+  stroke: white;
+}
+.bar {
+  fill: #248BC9;
+}
+.line {
+  fill: none;
+  stroke: #F75F00;
+  stroke-width: 4;
+}
+hr {
+  margin: .5rem 0 1rem 0;
+}
+#chartHead {
+  font-weight: bold;
+  opacity: 0;
+}
+#options {
+  display: flex;
+}
+.option {
+  width: 130px;
+  text-align: center;
+  border: solid 1px #999;
+  padding: 2px 4px;
+}
+.option.selected {
+  background: #333;
+  color: white;
+  border: solid 1px #333;
+  pointer-events: none;
+}
+.option:hover {
+  background: #333;
+  color: white;
+}
+#selectCases {
+  border-radius: 5px 0 0 5px;
+}
+#selectVax {
+  border-radius: 0 5px 5px 0;
+}
+#footer {
+  font-family: ABCSansNovaLight, Helvetica, sans-serif;
+  font-size: .8rem;
+}
+.axis .domain {
+  stroke: none;
+}
+.axis .tick line {
+  stroke: #999;
+  stroke-dasharray: 1 2;
+}
+.axis .tick text {
+  fill: #333;
+  font-size: .75rem;
+}
+.chartGroup {
+  display: none;
+}
+.chartGroup.selected {
+  display: block;
+}
+#keys {
+  margin: .75rem 0;
+}
+.key {
+  display: none;
+}
+.key.selected {
+  display: flex;
+  justify-content: center;
+}
+.item {
+  line-height: .9rem;
+  font-size: .9rem;
+  display: flex;
+  justify-content: center;
+}
+.item:last-child {
+  margin-left: 1rem;
+}
+.keyBox {
+  width: .9rem;
+  height: .9rem;
+  background: #333;
+  margin-right: .5rem;
+  border-radius: 50%;
+}
+.keyBox.cases {
+  background: #248BC9;
+}
+.keyBox.average {
+  background: #F75F00;
+}
+.keyBox.halfVaccinated {
+  background: #009CBF;
+}
+.keyBox.fullyVaccinated {
+  background: #00A388;
+}
+@media only screen and (max-width: 500px) {
+  body {
+    margin-bottom: .5rem;
+  }
+  #topContainer {
+    margin-right: 0;
+  }
+  #icon {
+    display: none;
+  }
+  #header {
+    margin-bottom: .75rem;
+  }
+  #header h1 {
+    font-size: 1.1rem;
+  }
+  #header p {
+    margin-top: 0;
+    font-size: .8rem;
+  }
+  .count div:last-child {
+    font-size: .7rem;
+  }
+  .box {
+    min-width: 2.75rem;
+    height: 2.75rem;
+    line-height: 2.75rem;
+    font-size: 1.5rem;
+  }
+  #twoDoses .box {
+    font-size: 1.25rem;
+  }
+  #oneDose .box {
+    font-size: 1.25rem;
+  }
+  .line {
+    stroke-width: 3;
+  }
+  hr {
+    margin: .25rem 0 .5rem 0;
+  }
+  .option {
+    width: 120px;
+    padding: 2px 3px;
+    font-size: .9rem;
+  }
+  #footer {
+    font-size: .65rem;
+  }
+  .axis .tick text {
+    font-size: .65rem;
+  }
+  .chartGroup {
+    display: none;
+  }
+  .chartGroup.selected {
+    display: block;
+  }
+  #keys {
+    margin: 0 0 .5rem 0;
+  }
+  .item {
+    line-height: .8rem;
+    font-size: .8rem;
+  }
+  .item:last-child {
+    margin-left: .75rem;
+  }
+  .keyBox {
+    width: .8rem;
+    height: .8rem;
+    margin-right: .25rem;
+  }
+}
+@media only screen and (min-width: 700px) {
+  body {
+    margin-bottom: 0;
+  }
+  #container {
+    width: 700px;
+    height: 650px;
+    top: 50%;
+    left: 50%;
+    padding: 1rem;
+    transform: translate(-50%, -50%);
+  }
+  #topContainer {
+    margin-right: 2rem;
+  }
+  #icon {
+    width: 210px;
+  }
+  #header {
+    margin-bottom: 1.5rem;
+  }
+  #header h1 {
+    font-size: 1.5rem;
+  }
+  #header p {
+    margin-top: .5rem;
+    font-size: 1rem;
+  }
+  .count div:last-child {
+    font-size: 1rem;
+  }
+  .box {
+    min-width: 4rem;
+    height: 4rem;
+    line-height: 4rem;
+    font-size: 2rem;
+    margin-bottom: .5rem;
+  }
+  #twoDoses .box {
+    font-size: 1.75rem;
+  }
+  #oneDose .box {
+    font-size: 1.75rem;
+  }
+  hr {
+    margin: 1rem 0 1.5rem 0;
+  }
+  .option {
+    width: 150px;
+    padding: 3px 5px;
+  }
+  #selectCases {
+    border-radius: 10px 0 0 10px;
+  }
+  #selectVax {
+    border-radius: 0 10px 10px 0;
+  }
+  #footer {
+    font-size: .9rem;
+  }
+  .axis .tick text {
+    font-size: .8rem;
+  }
+  #keys {
+    margin: 1rem 0 1.5rem 0;
+  }
+  .item {
+    line-height: 1rem;
+    font-size: 1rem;
+  }
+  .item:last-child {
+    margin-left: 1.5rem;
+  }
+  .keyBox {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 1rem;
+  }
+}
