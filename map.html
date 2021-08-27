@@ -24,14 +24,37 @@
   </head>
 
   <body>
+    <div id="header">
+      <div id="bar"></div>
+      <p id="count">DAY 0</p>
+    </div>
     <svg id="map">
       <g id="mapGroup">
         <path id="parks"></path>
         <path id="border"></path>
         <g id="suburbs"></g>
         <path id="water"></path>
+        <g id="sites"></g>
       </g>
     </svg>
+    <div id="keys">
+      <div class="key">
+        <div class="box"></div>
+        <div class="label">close</div>
+      </div>
+      <div class="key">
+        <div class="box Casual"></div>
+        <div class="label">casual</div>
+      </div>
+      <div class="key">
+        <div class="box Monitor"></div>
+        <div class="label">monitor</div>
+      </div>
+      <div class="key">
+        <div class="line transport"></div>
+        <div class="label">public transport</div>
+      </div>
+    </div>
 
     <script>
       // page elements
@@ -41,12 +64,18 @@
       border = d3.select("#border");
       suburbs = d3.select("#suburbs");
       water = d3.select("#water");
+      sites = d3.select("#sites");
+      header = d3.select("#header");
+      count = d3.select("#count");
+      bar = d3.select("#bar");
+      keys = d3.select("#keys");
 
       // load LGA data
       Promise.all([
         d3.json("./data/act.topojson"),
         d3.json("./data/suburbs.topojson"),
-        d3.json("./data/mesh.topojson")
+        d3.json("./data/mesh.topojson"),
+        d3.json("./data/mapData.topojson"),
       ])
         .then(function(data) {
 
@@ -54,6 +83,20 @@
           borderData = topojson.feature(data[0], data[0].objects.areas);
           suburbData = topojson.feature(data[1], data[1].objects.areas);
           meshData = topojson.feature(data[2], data[2].objects.areas);
+          mapData = topojson.feature(data[3], data[3].objects.areas);
+          mapData.features = mapData
+            .features
+            .map(function(d) {
+              d.properties.date = new Date(d.properties.date);
+              return d;
+            });
+          dateRange = d3.extent(mapData.features, function(d) {
+            return d.properties.date;
+          });
+          day = 0;
+          loopTime = 1000;
+          endDate = new Date("2021-08-06");
+          startDate = new Date("2021-08-06");
 
           // prepare map
           projection = d3.geoConicEqualArea()
@@ -68,19 +111,89 @@
             .data(suburbData.features)
           .enter().append("path")
             .classed("suburb", true);
+          sites.selectAll(".site")
+            .data(mapData.features)
+          .enter().append("path")
+            .attr("class", function(d) {
+              return d.properties.class + " " + d.properties.contact + " site";
+            });
 
           // begin and draw
           window.addEventListener("resize", resize);
-          resize();
+          d3.timeout(function() { // short pause to allow fonts to load
+            resize();
+            map.transition()
+              .duration(loopTime)
+              .style("opacity", 1)
+              .on("end", advance);
+          }, 500);
         });
 
+      function advance() {
+        cycle = d3.interval(function() {
+          day = day + 1;
+          if (day == 19) {
+            cycle.stop();
+            reset();
+          } else {
+            startDate = new Date("2021-08-06");
+            endDate = new Date("2021-08-06");
+            startDate.setDate(startDate.getDate() + day - 1);
+            endDate.setDate(endDate.getDate() + day);
+            resize();
+          }
+        }, loopTime);
+      }
+
+      function reset() {
+        day = 0;
+        count.transition()
+          .delay(loopTime * 1.5)
+          .duration(loopTime * 1.5)
+          .textTween(function() {
+            let i = d3.interpolate(18, 0);
+            return function(t) {
+              return "DAY " + d3.format(".0f")(i(t));
+            };
+          })
+        bar.transition()
+          .delay(loopTime * 1.5)
+          .duration(loopTime * 1.5)
+          .ease(d3.easeLinear)
+          .style("width", "0px");
+        d3.timeout(advance, loopTime * 4.5);
+      }
+
       function resize() {
+        console.log("day", day, d3.timeFormat("%b %-d")(endDate));
         mapDimensions = document.getElementById("map").getBoundingClientRect();
         width = mapDimensions.width;
         height = mapDimensions.height;
-        projection.fitSize([width, height], suburbData);
-        mapGroup.selectAll("path")
-          .attr("d", path);
+        count.text("DAY " + day);
+        bar.transition()
+          .duration(loopTime)
+          .ease(d3.easeLinear)
+          .style("width", day / 18 * width + "px");
+        projection.fitExtent([[16, 16], [width - 16, height - 16]], mapData);
+        mapGroup.selectAll("#parks, #water, #border, .suburb")
+          .transition()
+            .duration(loopTime)
+            .attr("d", path);
+        sites.selectAll(".site")
+          .filter(function(d) {
+            return (d.properties.date <= endDate) &&
+              (d.properties.date > startDate);
+          })
+          .attr("d", function(d) {
+            return width < 500 ? path.pointRadius(4)(d) :
+              path.pointRadius(7.5)(d);
+          })
+          .transition()
+          .style("opacity", 1)
+          .transition()
+            .duration(loopTime * 4)
+            .style("opacity", 0)
+            .attr("d", path.pointRadius(0));
       }
     </script>
   </body>

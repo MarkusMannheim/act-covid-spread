@@ -13,7 +13,7 @@
 }
 :root {
   font-size: 1em;
-  font-family: ABCSansNovaRegular, Helvetica, sans-serif;
+  font-family: ABCSansNovaBlack, "Arial Black", Helvetica, sans-serif;
   color: #333;
   box-sizing: border-box;
 }
@@ -24,6 +24,8 @@ body {
   left: 0;
   bottom: .5rem;
   margin: 0;
+  display: flex;
+  flex-flow: column;
 }
 h1, p {
   margin: 0;
@@ -32,6 +34,7 @@ h1, p {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  opacity: 0;
 }
 #border {
   fill: none;
@@ -48,4 +51,112 @@ h1, p {
 #parks {
   fill: #f2f2f2;
   opacity: .5;
+}
+.site {
+  fill: red;
+  stroke: white;
+  stroke-width: 1;
+  opacity: 0;
+}
+.site.Casual {
+  fill: #F75F00;
+}
+.site.Monitor {
+  fill: #FFB300;
+}
+.site.lightrail, .site.bus {
+  stroke-width: 2;
+  fill: none;
+  stroke: #009CBF;
+}
+#bar {
+  width: 0px;
+  height: 2rem;
+  background: #009CBF;
+}
+#count {
+  position: absolute;
+  color: white;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  text-shadow: 2px 2px 2px #333;
+  top: 0;
+  left: .5rem;
+}
+#header {
+  background: #333;
+}
+#keys {
+  font-family: ABCSansNovaRegular, Helvetica, sans-serif;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  margin-top: .5rem;
+}
+.key {
+  display: flex;
+  margin-left: 1rem;
+}
+.key:first-child {
+  margin-left: 0;
+}
+.box {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: red;
+}
+.line {
+  width: 1rem;
+  height: .4rem;
+  background: none;
+  border-bottom: solid 3px #009CBF;
+}
+.box.Casual {
+  background: #F75F00;
+}
+.box.Monitor {
+  background: #FFB300;
+}
+.key .label {
+  margin-left: .5rem;
+  line-height: 1rem;
+}
+@media only screen and (max-width: 500px) {
+  .site {
+    stroke: none;
+  }
+  .site.lightrail, .site.bus {
+    stroke-width: 1.5;
+  }
+  #bar {
+    height: 1.5rem;
+  }
+  #count {
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+  }
+  #keys {
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    font-size: .9rem;
+  }
+  .key {
+    margin-top: .25rem;
+  }
+  .key:first-child {
+    margin-top: 0;
+  }
+  .box {
+    width: .9rem;
+    height: .9rem;
+  }
+  .line {
+    width: .9rem;
+    height: .3rem;
+  }
+  .key .label {
+    line-height: .9rem;
+  }
 }
