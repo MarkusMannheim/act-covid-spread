@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-155991615-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("js", new Date());
+      gtag("config", "UA-155991615-1");
+    </script>
+
+    <!-- my stuff -->
+    <meta charset="utf-8">
+    <title>ACT COVID-19 age profiles</title>
+    <meta name="author" content="Markus Mannheim">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- initial scripts -->
+    <script src="./resources/d3.v6.min.js"></script>
+    <link href="./resources/sites.css" rel="stylesheet">
+    <link href="./resources/abcLogo64.png" rel="icon">
+  </head>
+
+  <body>
+    <container id="container">
+      <div id="header">PUBLIC EXPOSURE SITES</div>
+      <svg id="chart">
+        <g id="chartGroup"></g>
+        <g id="axisGroup">
+          <g id="xAxisGroup" class="axis"></g>
+          <g id="yAxisGroup" class="axis"></g>
+          <g id="lockdown">
+            <line></line>
+            <text>LOCKDOWN</text>
+          </g>
+        </g>
+      </svg>
+      <div id="keys">
+        <div class="key cases">
+          <div class="item">
+            <div class="keyBox close"></div>
+            <div>close</div>
+          </div>
+          <div class="item">
+            <div class="keyBox casual"></div>
+            <div>casual</div>
+          </div>
+          <div class="item">
+            <div class="keyBox monitor"></div>
+            <div>monitor</div>
+          </div>
+        </div>
+      </div>
+    </container>
+
+    <script>
+      // page elements
+      top = d3.select("#top");
+      header = d3.select("#header");
+      chart = d3.select("#chart");
+      chartGroup = d3.select("#chartGroup");
+      xAxisGroup = d3.select("#xAxisGroup");
+      yAxisGroup = d3.select("#yAxisGroup");
+      lockdown = d3.select("#lockdown");
+
+      // load LGA data
+      d3.csv("./data/sites.csv")
+        .then(function(data) {
+
+          // data
+          siteData = data
+            .map(function(d) {
+              return {
+                date: d3.timeParse("%Y-%m-%d")(d.date),
+                close: +d.close,
+                casual: +d.casual,
+                monitor: +d.monitor
+              };
+            });
+
+          // prepare chart
+          x = d3.scaleTime()
+            .domain(d3.extent(siteData, function(d) {
+              return d.date;
+            }));
+          y = d3.scaleLinear()
+            .domain([0, d3.max(siteData, function(d) {
+              return d.close + d.casual + d.monitor;
+            })]);
+          xAxis = d3.axisBottom(x)
+            .tickPadding(8)
+            .tickSizeOuter(0)
+            .ticks(4, "%b %-d");
+          yAxis = d3.axisLeft(y)
+            .tickPadding(8)
+            .tickSizeOuter(0)
+            .ticks(4);
+          stack = d3.stack()
+            .keys(["close", "casual", "monitor"]);
+          area = d3.area()
+            .x(function(d) {
+              return x(d.data.date);
+            })
+            .y1(function(d) {
+              return y(d[1]);
+            })
+            .y0(function(d) {
+              return y(d[0]);
+            })
+            .curve(d3.curveBasis);
+
+          layers = chartGroup
+            .selectAll(".layer")
+              .data(stack(siteData))
+            .enter().append("path")
+              .attr("class", function(d) {
+                return "site " + d.key;
+              });
+
+          // fade in; calculate chart dimensions
+          d3.timeout(function() {
+            window.addEventListener("resize", resize);
+            resize();
+            chart.transition()
+              .duration(500)
+              .style("opacity", 1);
+          }, 1000);
+        });
+
+      function resize() {
+        chartDimensions = document.getElementById("chart").getBoundingClientRect();
+        width = chartDimensions.width;
+        height = chartDimensions.height;
+        margin = {
+          top: 5,
+          right: 5,
+          bottom: 25,
+          left: 25
+        };
+        x.range([margin.left, width - margin.right]);
+        y.range([height - margin.bottom, margin.top]);
+        xAxis.tickSizeInner(margin.top + margin.bottom - height);
+        yAxis.tickSizeInner(margin.left + margin.right - width);
+        yAxisGroup.attr("transform", "translate(" + margin.left + ", 0)")
+          .call(yAxis);
+        xAxisGroup.attr("transform", "translate(0, " + (height - margin.bottom) + ")")
+          .call(xAxis);
+        layers.attr("d", area);
+        lockdown.attr("transform", "translate(" + x(new Date("2021-08-12")) + ", " + margin.top + ")");
+        lockdown.select("line")
+          .attr("x1", 0)
+          .attr("x2", 0)
+          .attr("y1", 0)
+          .attr("y2", height - margin.bottom - margin.top);
+        lockdown.select("text")
+          .attr("transform", "translate(15, " + (height - margin.bottom - margin.top) / 2 + ") rotate(-90)");
+      }
+    </script>
+  </body>
+</html>

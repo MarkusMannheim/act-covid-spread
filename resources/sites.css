@@ -1,0 +1,129 @@
+/* b: #009CBF o: #F75F00 g: #00A388 --tint-1: #333; --tint-2: #666; --tint-3: #999; --tint-4: #ccc; --tint-5: #e6e6e6; --tint-6: #f2f2f2; */
+@font-face {
+ font-family: ABCSansNovaRegular;
+ src: url(../fonts/ABCSansNova-Regular.otf);
+}
+@font-face {
+ font-family: ABCSansNovaBlack;
+ src: url(../fonts/ABCSansNova-Black.otf);
+}
+@font-face {
+ font-family: ABCSansNovaLight;
+ src: url(../fonts/ABCSansNova-Light.otf);
+}
+:root {
+  font-size: 1em;
+  font-family: ABCSansNovaRegular, Helvetica, sans-serif;
+  color: #333;
+  box-sizing: border-box;
+}
+body {
+  overflow: hidden;
+}
+#container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: .5rem;
+  display: flex;
+  flex-flow: column;
+}
+h1, p {
+  margin: 0;
+}
+#header {
+  margin-bottom: .5rem;
+  font-family: ABCSansNovaBlack, "Arial Black", Gadget, sans-serif;
+  font-size: 1.3rem;
+}
+#chart {
+  width: 100%;
+  height: 100%;
+}
+.axis .domain {
+  stroke: none;
+}
+.axis .tick line {
+  stroke: #999;
+  stroke-dasharray: 1 2;
+}
+.axis .tick text {
+  fill: 333;
+  font-size: .75rem;
+}
+#keys {
+  margin-top: .5rem;
+}
+.key {
+  display: flex;
+  justify-content: center;
+}
+.item {
+  font-weight: bold;
+  line-height: 1rem;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  margin-left: 1rem;
+}
+.item:first-child {
+  margin-left: 0;
+}
+.keyBox {
+  width: 1rem;
+  height: 1rem;
+  margin-right: .5rem;
+  border-radius: 50%;
+}
+.keyBox.casual {
+  background: #FF6100;
+}
+.keyBox.close {
+  background: red;
+}
+.keyBox.monitor {
+  background: #FFB300;
+}
+.site.monitor {
+  fill: #FFB300;
+}
+.site.close {
+  fill: red;
+}
+.site.casual {
+  fill: #FF6100;
+}
+#lockdown line {
+  stroke: #333;
+  stroke-dasharray: 2 3;
+  stroke-width: 2;
+}
+#lockdown text {
+  text-anchor: middle;
+  fill: #333;
+  font-size: .8rem;
+  font-weight: bold;
+}
+@media only screen and (max-width: 500px) {
+  #header {
+    margin-bottom: .25rem;
+    font-size: 1.1rem;
+  }
+  #keys {
+    margin-top: .25rem;
+  }
+  .item {
+    line-height: .8rem;
+    font-size: .8rem;
+    margin-left: .75rem;
+  }
+  .keyBox {
+    width: .8rem;
+    height: .8rem;
+    margin-right: .25rem;
+  }
+  #lockdown text {
+    font-size: .75rem;
+  }
+}
