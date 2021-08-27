@@ -12,7 +12,7 @@
 
     <!-- my stuff -->
     <meta charset="utf-8">
-    <title>ACT COVID-19 snapshot</title>
+    <title>ACT COVID-19 spread</title>
     <meta name="author" content="Markus Mannheim">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -165,7 +165,6 @@
       }
 
       function resize() {
-        console.log("day", day, d3.timeFormat("%b %-d")(endDate));
         mapDimensions = document.getElementById("map").getBoundingClientRect();
         width = mapDimensions.width;
         height = mapDimensions.height;

@@ -1,0 +1,74 @@
+/* b: #009CBF o: #F75F00 g: #00A388 --tint-1: #333; --tint-2: #666; --tint-3: #999; --tint-4: #ccc; --tint-5: #e6e6e6; --tint-6: #f2f2f2; */
+@font-face {
+ font-family: ABCSansNovaRegular;
+ src: url(../fonts/ABCSansNova-Regular.otf);
+}
+@font-face {
+ font-family: ABCSansNovaBlack;
+ src: url(../fonts/ABCSansNova-Black.otf);
+}
+@font-face {
+ font-family: ABCSansNovaLight;
+ src: url(../fonts/ABCSansNova-Light.otf);
+}
+:root {
+  font-size: 1em;
+  font-family: ABCSansNovaRegular, Helvetica, sans-serif;
+  font-weight: bold;
+  color: white;
+  box-sizing: border-box;
+}
+body {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: .5rem;
+  margin: 0;
+  display: flex;
+  flex-flow: column;
+  opacity: 0;
+}
+h1, p {
+  margin: 0;
+}
+#map {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+#border {
+  fill: none;
+  stroke: #999;
+  stroke-dasharray: 2 3;
+}
+#water {
+  fill: #999;
+}
+.suburb {
+  fill: #f2f2f2;
+  stroke: #ccc;
+}
+#parks {
+  fill: #f2f2f2;
+  opacity: .5;
+}
+.site {
+  fill: red;
+  stroke: #333;
+}
+.label {
+  font-size: .75rem;
+  position: absolute;
+  padding: 2px 4px;
+  background: #333;
+}
+@media only screen and (max-width: 500px) {
+  .site {
+    stroke-width: .5;
+  }
+  .label {
+    font-size: .7rem;
+    padding: 1px 3px;
+  }
+}

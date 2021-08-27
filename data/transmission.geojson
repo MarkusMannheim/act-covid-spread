@@ -1,0 +1,15 @@
+{
+"type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "site": "Lyneham High School" }, "geometry": { "type": "Point", "coordinates": [ 149.130518, -35.2524674 ] } },
+{ "type": "Feature", "properties": { "site": "Southern Cross Basketball" }, "geometry": { "type": "Point", "coordinates": [ 149.0634307, -35.4155197 ] } },
+{ "type": "Feature", "properties": { "site": "Fiction Bar" }, "geometry": { "type": "Point", "coordinates": [ 149.1316294, -35.2778169 ] } },
+{ "type": "Feature", "properties": { "site": "Lennock Jaguar Land Rover" }, "geometry": { "type": "Point", "coordinates": [ 149.089149099999986, -35.356842 ] } },
+{ "type": "Feature", "properties": { "site": "Assembly Pub" }, "geometry": { "type": "Point", "coordinates": [ 149.1322968, -35.2743976 ] } },
+{ "type": "Feature", "properties": { "site": "Downer Community Centre" }, "geometry": { "type": "Point", "coordinates": [ 149.1445996, -35.2448948 ] } },
+{ "type": "Feature", "properties": { "site": "Bright Bees Childcare" }, "geometry": { "type": "Point", "coordinates": [ 149.0835174, -35.1893609 ] } },
+{ "type": "Feature", "properties": { "site": "Basketball ACT" }, "geometry": { "type": "Point", "coordinates": [ 149.0575179, -35.2420057 ] } },
+{ "type": "Feature", "properties": { "site": "CIT Reid campus" }, "geometry": { "type": "Point", "coordinates": [ 149.1374298, -35.2864723 ] } },
+{ "type": "Feature", "properties": { "site": "Gold Creek School" }, "geometry": { "type": "Point", "coordinates": [ 149.100445400000012, -35.1812815 ] } }
+]
+}

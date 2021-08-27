@@ -67,7 +67,7 @@ h1, p {
 .site.lightrail, .site.bus {
   stroke-width: 2;
   fill: none;
-  stroke: #009CBF;
+  stroke: #999;
 }
 #bar {
   width: 0px;
@@ -110,7 +110,7 @@ h1, p {
   width: 1rem;
   height: .4rem;
   background: none;
-  border-bottom: solid 3px #009CBF;
+  border-bottom: solid 3px #999;
 }
 .box.Casual {
   background: #F75F00;
