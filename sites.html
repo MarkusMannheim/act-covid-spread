@@ -154,7 +154,7 @@
           .attr("y1", 0)
           .attr("y2", height - margin.bottom - margin.top);
         lockdown.select("text")
-          .attr("transform", "translate(15, " + (height - margin.bottom - margin.top) / 2 + ") rotate(-90)");
+          .attr("transform", "translate(" + (width < 700 ? 15 : 20) + ", " + (height - margin.bottom - margin.top) / 2 + ") rotate(-90)");
       }
     </script>
   </body>
