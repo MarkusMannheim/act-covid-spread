@@ -19,7 +19,7 @@
     <!-- initial scripts -->
     <script src="./resources/d3.v6.min.js"></script>
     <script src="./resources/topojson.v3.min.js"></script>
-    <link href="./resources/map.css" rel="stylesheet">
+    <link href="./resources/social.css" rel="stylesheet">
     <link href="./resources/abcLogo64.png" rel="icon">
   </head>
 
@@ -38,17 +38,18 @@
       </g>
     </svg>
     <div id="keys">
+      <div class="key header">exposure sites:</div>
       <div class="key">
         <div class="box"></div>
-        <div class="label">close</div>
+        <div class="label">close contact</div>
       </div>
       <div class="key">
         <div class="box Casual"></div>
-        <div class="label">casual</div>
+        <div class="label">casual contact</div>
       </div>
       <div class="key">
         <div class="box Monitor"></div>
-        <div class="label">monitor</div>
+        <div class="label">monitor symptoms</div>
       </div>
       <div class="key">
         <div class="line transport"></div>
@@ -94,7 +95,7 @@
             return d.properties.date;
           });
           day = 0;
-          loopTime = 1000;
+          loopTime = 750;
           endDate = new Date("2021-08-06");
           startDate = new Date("2021-08-06");
 
@@ -173,7 +174,7 @@
           .duration(loopTime)
           .ease(d3.easeLinear)
           .style("width", day / 24 * width + "px");
-        projection.fitExtent([[16, 16], [width - 16, height - 16]], mapData);
+        projection.fitExtent([[128, 24], [width + 32, height - 24]], mapData);
         mapGroup.selectAll("#parks, #water, #border, .suburb")
           .transition()
             .duration(loopTime)
@@ -183,10 +184,7 @@
             return (d.properties.date <= endDate) &&
               (d.properties.date > startDate);
           })
-          .attr("d", function(d) {
-            return width < 500 ? path.pointRadius(4)(d) :
-              path.pointRadius(7.5)(d);
-          })
+          .attr("d", path.pointRadius(12.5))
           .transition()
           .style("opacity", 1)
           .transition()
